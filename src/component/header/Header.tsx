@@ -33,7 +33,7 @@ export const Header = () => {
                     <img className="h-[40px] cursor-pointer" src="/src/assets/logo/librarian-logo.png" alt="Librarian logo"/>
                 </div>
                 <div className="relative sign-in flex justify-end items-center gap-3">
-                    <div onClick={onHandleUserImageClick} className={`${user ? 'block' : 'block'} user-image`}>
+                    <div onClick={onHandleUserImageClick} className={`${user ? 'block' : 'hidden'} user-image`}>
                         <img className="object-cover" src={user ? imageUrl : ""} alt="User profile image"/>
                     </div>
                     <div
