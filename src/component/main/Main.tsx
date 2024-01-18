@@ -1,10 +1,13 @@
 import './Main.css';
-import {Book} from "../book/Book.tsx";
+import {BookList} from "../booklist/BookList.tsx";
+import {BookProvider} from "../../context/BookContext.tsx";
 
 export const Main = () => {
     return (
         <div className="w-[80%]">
-            <Book/>
+            <BookProvider>
+                <BookList/>
+            </BookProvider>
         </div>
     );
 };

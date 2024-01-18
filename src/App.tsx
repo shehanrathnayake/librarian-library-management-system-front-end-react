@@ -2,6 +2,7 @@ import './App.css'
 import {Header} from "./component/header/Header.tsx";
 import {Aside} from "./component/aside/Aside.tsx";
 import {Main} from "./component/main/Main.tsx";
+import {CategoryProvider} from "./context/CategoryContext.tsx";
 
 function App() {
 
@@ -10,10 +11,11 @@ function App() {
         <Header/>
         <div className="w-full flex justify-center">
             <div className="container w-full flex">
-                <Aside/>
-                <Main/>
+                <CategoryProvider>
+                    <Aside/>
+                    <Main/>
+                </CategoryProvider>
             </div>
-
         </div>
     </>
   )
