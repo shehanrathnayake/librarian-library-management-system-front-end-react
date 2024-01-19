@@ -1,5 +1,6 @@
 import {createBrowserRouter, Navigate, RouteObject} from "react-router-dom";
-import {Home} from "./component/home/Home.tsx";
+import React from "react";
+import App from "./App.tsx";
 
 const routes: RouteObject[] = [
     {
@@ -8,7 +9,7 @@ const routes: RouteObject[] = [
     },
     {
         path: 'home',
-        element: <Home/>
+        element: <App/>
     }
 ];
 
