@@ -1,22 +1,15 @@
 import './App.css'
-import {Header} from "./component/header/Header.tsx";
-import {Aside} from "./component/aside/Aside.tsx";
-import {Main} from "./component/main/Main.tsx";
-import {CategoryProvider} from "./context/CategoryContext.tsx";
+import {Home} from "./component/home/Home.tsx";
+import {UserProvider} from "./context/UserContext.tsx";
 
 function App() {
 
   return (
     <>
-        <Header/>
-        <div className="w-full flex justify-center">
-            <div className="container w-full flex">
-                <CategoryProvider>
-                    <Aside/>
-                    <Main/>
-                </CategoryProvider>
-            </div>
-        </div>
+        <UserProvider>
+            <Home/>
+        </UserProvider>
+
     </>
   )
 }
