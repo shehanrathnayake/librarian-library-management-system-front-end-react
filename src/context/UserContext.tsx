@@ -1,18 +1,21 @@
-import {createContext, ReactNode, useContext, useReducer} from "react";
-import {User} from "firebase/auth"
+import React, {createContext, ReactNode, useContext, useReducer} from "react";
+import {UserDto} from "../dto/UserDto.ts";
 
 type Action = {
     type: "sign-in" | "sign-out",
     [property: string]: any
 }
 
-const UserContext = createContext<User | undefined>(undefined);
+const UserContext = createContext<UserDto | null>(null);
 const UserDispatcherContext = createContext<React.Dispatch<Action>>(() => {});
 
-function userReducer(user: User, action: Action) {
+function userReducer(user: UserDto,action: Action) {
     if (action.type === 'sign-in') {
+        alert(action.user);
+        console.log(action);
         return action.user
     } else {
+        alert('No user');
         return null;
     }
 }
