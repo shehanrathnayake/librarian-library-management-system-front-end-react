@@ -11,3 +11,8 @@ export async function getAllBooks(category: string[]) {
 
     return await (await fetch(stringUrl)).json();
 }
+
+export async function getBookDetails(bookId: string) {
+    let stringUrl = `${API_BASE_URL}/`+ bookId;
+    return await (await fetch(stringUrl)).json();
+}

@@ -17,9 +17,9 @@ export const BookList = () => {
             alert("Failed to load tasks")
         });
 
-        return () => {
-            bookDispatcher({type: 'set-list', bookList: []});
-        }
+        // return () => {
+        //     bookDispatcher({type: 'set-list', bookList: []});
+        // }
     }, [checkedCategories]);
 
     return (
