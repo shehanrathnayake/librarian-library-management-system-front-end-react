@@ -1,26 +1,20 @@
 import './App.css'
-import {UserProvider} from "./context/UserContext.tsx";
 import {Header} from "./component/header/Header.tsx";
-import {CategoryProvider} from "./context/CategoryContext.tsx";
-import {Aside} from "./component/aside/Aside.tsx";
-import {Main} from "./component/main/Main.tsx";
+import {Outlet} from "react-router-dom";
+import {BookProvider} from "./context/BookContext.tsx";
 
 function App() {
 
   return (
     <>
-        <UserProvider>
-            <Header/>
-            <div className="w-full flex justify-center">
-                <div className="container w-full flex">
-                    <CategoryProvider>
-                        <Aside/>
-                        <Main/>
-                    </CategoryProvider>
-                </div>
+        <Header/>
+        <div className="w-full flex justify-center">
+            <div className="container w-full flex">
+                <BookProvider>
+                    <Outlet />
+                </BookProvider>
             </div>
-        </UserProvider>
-
+        </div>
     </>
   )
 }
