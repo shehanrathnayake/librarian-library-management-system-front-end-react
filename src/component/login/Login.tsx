@@ -4,22 +4,25 @@ import {useState} from "react";
 import {useUserDispatcher} from "../../context/UserContext.tsx";
 import {getLoggingUser} from "../../service/auth-service.ts";
 import {UserCredentialDto} from "../../dto/UserCredentialDto.ts";
+import {useNavigate} from "react-router-dom";
 
 export const Login = () => {
     const [nameValue, setNameValue] = useState("");
     const [passwordValue, setPasswordValue] = useState("");
     const userDispatcher = useUserDispatcher();
+    const navigate = useNavigate();
     async function onClickBtnLogin() {
         await getLoggingUser(new UserCredentialDto(nameValue, passwordValue))
             .then(loggedUser => {
-                userDispatcher({type: 'sign-in', user: loggedUser})
+                userDispatcher({type: 'sign-in', user: loggedUser});
+                navigate('/app');
             }).catch(error => {
                 alert(error);
             })
     }
     return (
         <>
-            <div className="w-[100%] flex flex-col justify-center items-center">
+            <div className="w-[100%] flex flex-col justify-center items-center pt-6">
                 <Card>
                     <h1 className="w-[100%] text-3xl font-semibold">Login</h1>
                     <form className="flex max-w-md flex-col gap-4">
