@@ -4,8 +4,8 @@ import {useUser, useUserDispatcher} from "../../context/UserContext.tsx";
 import {Button, Label, TextInput} from "flowbite-react";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {createNewUser} from "../../service/user-service.ts";
 import {UserDto} from "../../dto/UserDto.ts";
+import {authenticateNewUser} from "../../service/auth-service.ts";
 
 export const Register = () => {
 
@@ -31,6 +31,7 @@ export const Register = () => {
     const [confirmPasswordMessage, setConfirmPasswordMessage] = useState("");
 
     const navigate = useNavigate()
+    const [registeredUser, setRegisteredUser] = useState<UserDto | null>(null);
 
     function onChangeNameValue(e: any) {
         let newName = e.target.value;
@@ -75,15 +76,38 @@ export const Register = () => {
         else setConfirmPasswordMessage("");
     }
     async function onClickBtnRegister() {
-        createNewUser(new UserDto(null, name, email, password, address, contact))
-            .then(user => {
-                userDispatcher({type: 'sign-in', user: user});
-            }).catch(error => {
-                console.log(error)
-        });
+        // await createNewUser(new UserDto(null, name, email, password, address, contact))
+        //     .then(registeredUser => {
+        //         setRegisteredUser(registeredUser);
+        //
+        //     })
+        //     .catch(error => {
+        //         alert(error);
+        //     });
+
+        // let registeredUser: UserDto | null = null;
+        // try {
+        //     registeredUser= await createNewUser();
+        // } catch (e) {
+        //     alert("Error occurred while registering: " + e);
+        // }
+        // if (registeredUser) {
+        //     await authenticateUser(new UserCredentialDto(registeredUser.id!, registeredUser.password))
+        //         .then(loggedUser => {
+        //             userDispatcher({type: 'sign-in', user: loggedUser});
+        //             navigate('/app');
+        //         }).catch(error => {
+        //             alert("Error occurred while login" + error);
+        //         });
+        // }
+        await authenticateNewUser(new UserDto(null, name, email, password, address, contact, "member"))
+            .then(loggedUser => {
+                userDispatcher({type: 'sign-in', user: loggedUser});
+                navigate('/app');
+            }).catch(error => {userDispatcher({type: 'sign-in', user: null})});
     }
     return (
-        <div className="w-[100%] flex flex-col justify-center items-center">
+        <div className="w-[100%] flex flex-col justify-center items-center pt-6">
             <div className="registration-step1">
                 <Card>
                     <h1 className="w-[100%] text-3xl font-semibold">Register</h1>
@@ -200,7 +224,7 @@ export const Register = () => {
                                 }
                             />
                         </div>
-                        <Button onClick={onClickBtnRegister} type="submit">Register</Button>
+                        <Button onClick={onClickBtnRegister} type="button">Register</Button>
                     </form>
                 </Card>
             </div>

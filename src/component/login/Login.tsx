@@ -2,7 +2,7 @@ import {Card} from "flowbite-react/lib/esm/components/Card/Card";
 import {Button, Label, TextInput} from "flowbite-react";
 import {useState} from "react";
 import {useUserDispatcher} from "../../context/UserContext.tsx";
-import {getLoggingUser} from "../../service/auth-service.ts";
+import {authenticateUser} from "../../service/auth-service.ts";
 import {UserCredentialDto} from "../../dto/UserCredentialDto.ts";
 import {useNavigate} from "react-router-dom";
 
@@ -12,13 +12,13 @@ export const Login = () => {
     const userDispatcher = useUserDispatcher();
     const navigate = useNavigate();
     async function onClickBtnLogin() {
-        await getLoggingUser(new UserCredentialDto(nameValue, passwordValue))
+        await authenticateUser(new UserCredentialDto(nameValue, passwordValue))
             .then(loggedUser => {
                 userDispatcher({type: 'sign-in', user: loggedUser});
                 navigate('/app');
             }).catch(error => {
                 alert(error);
-            })
+            });
     }
     return (
         <>

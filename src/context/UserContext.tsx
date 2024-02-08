@@ -9,10 +9,8 @@ type Action = {
 const UserContext = createContext<UserDto | null>(null);
 const UserDispatcherContext = createContext<React.Dispatch<Action>>(() => {});
 
-function userReducer(user: UserDto,action: Action) {
+function userReducer(user: UserDto, action: Action) {
     if (action.type === 'sign-in') {
-        alert(action.user);
-        console.log(action);
         return action.user
     } else {
         alert('No user');
