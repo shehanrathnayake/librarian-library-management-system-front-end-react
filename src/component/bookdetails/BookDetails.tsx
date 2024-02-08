@@ -24,9 +24,9 @@ export const BookDetails = () => {
         if (loggedUser) {
             createNewIssue(new IssueDto(null, new Date(), "issued", 0, null, bookId!, loggedUser.id!))
                 .then(issueDto => {
-                    alert(issueDto + " is created successfully");
+                    alert(book?.name + " is issued to " + loggedUser.name);
                 }).catch(error => {
-                alert(error);
+                alert("Couldn't issue the book. Please try again");
             });
             navigate('/app')
         } else {

@@ -1,6 +1,6 @@
 import './Register.css';
 import {Card} from "flowbite-react/lib/esm/components/Card/Card";
-import {useUser, useUserDispatcher} from "../../context/UserContext.tsx";
+import {useUserDispatcher} from "../../context/UserContext.tsx";
 import {Button, Label, TextInput} from "flowbite-react";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
@@ -9,7 +9,6 @@ import {authenticateNewUser} from "../../service/auth-service.ts";
 
 export const Register = () => {
 
-    const user = useUser();
     const userDispatcher = useUserDispatcher();
 
     const [name, setName] = useState("");
@@ -31,7 +30,6 @@ export const Register = () => {
     const [confirmPasswordMessage, setConfirmPasswordMessage] = useState("");
 
     const navigate = useNavigate()
-    const [registeredUser, setRegisteredUser] = useState<UserDto | null>(null);
 
     function onChangeNameValue(e: any) {
         let newName = e.target.value;
@@ -76,30 +74,6 @@ export const Register = () => {
         else setConfirmPasswordMessage("");
     }
     async function onClickBtnRegister() {
-        // await createNewUser(new UserDto(null, name, email, password, address, contact))
-        //     .then(registeredUser => {
-        //         setRegisteredUser(registeredUser);
-        //
-        //     })
-        //     .catch(error => {
-        //         alert(error);
-        //     });
-
-        // let registeredUser: UserDto | null = null;
-        // try {
-        //     registeredUser= await createNewUser();
-        // } catch (e) {
-        //     alert("Error occurred while registering: " + e);
-        // }
-        // if (registeredUser) {
-        //     await authenticateUser(new UserCredentialDto(registeredUser.id!, registeredUser.password))
-        //         .then(loggedUser => {
-        //             userDispatcher({type: 'sign-in', user: loggedUser});
-        //             navigate('/app');
-        //         }).catch(error => {
-        //             alert("Error occurred while login" + error);
-        //         });
-        // }
         await authenticateNewUser(new UserDto(null, name, email, password, address, contact, "member"))
             .then(loggedUser => {
                 userDispatcher({type: 'sign-in', user: loggedUser});
@@ -108,131 +82,124 @@ export const Register = () => {
     }
     return (
         <div className="w-[100%] flex flex-col justify-center items-center pt-6">
-            <div className="registration-step1">
-                <Card>
-                    <h1 className="w-[100%] text-3xl font-semibold">Register</h1>
-                    <form className="flex max-w-md flex-col gap-4">
-                        <div>
-                            <div className="mb-2 block">
-                                <Label htmlFor="name" color={`${nameMessage ? 'failure' : ''}`} value="Your name"/>
-                            </div>
-                            <TextInput
-                                id="name"
-                                placeholder="Eg: Shehan Rathnayake"
-                                required
-                                pattern="^[A-Za-z. ]+$"
-                                value={name}
-                                color={`${nameMessage ? 'failure' : ''}`}
-                                onChange={onChangeNameValue}
-                                helperText={
-                                    <>
-                                        {nameMessage}
-                                    </>
-                                }
-                            />
+            <Card>
+                <h1 className="w-[100%] text-3xl font-semibold">Register</h1>
+                <form className="flex max-w-md flex-col gap-4">
+                    <div>
+                        <div className="mb-2 block">
+                            <Label htmlFor="name" color={`${nameMessage ? 'failure' : ''}`} value="Your name"/>
                         </div>
-                        <div>
-                            <div className="mb-2 block">
-                                <Label htmlFor="email" color={`${emailMessage ? 'failure' : ''}`} value="Your email"/>
-                            </div>
-                            <TextInput
-                                id="email"
-                                placeholder="Eg: shehanrathnayake@email.com"
-                                required
-                                color={`${emailMessage ? 'failure' : ''}`}
-                                type="email"
-                                value={email}
-                                onChange={onChangeEmailValue}
-                                helperText={
-                                    <>
-                                        {emailMessage}
-                                    </>
-                                }
-                            />
+                        <TextInput
+                            id="name"
+                            placeholder="Eg: Shehan Rathnayake"
+                            required
+                            pattern="^[A-Za-z. ]+$"
+                            value={name}
+                            color={`${nameMessage ? 'failure' : ''}`}
+                            onChange={onChangeNameValue}
+                            helperText={
+                                <>
+                                    {nameMessage}
+                                </>
+                            }
+                        />
+                    </div>
+                    <div>
+                        <div className="mb-2 block">
+                            <Label htmlFor="email" color={`${emailMessage ? 'failure' : ''}`} value="Your email"/>
                         </div>
-                        <div>
-                            <div className="mb-2 block">
-                                <Label htmlFor="address" color={`${addressMessage ? 'failure' : ''}`} value="Your address"/>
-                            </div>
-                            <TextInput
-                                id="address"
-                                placeholder="Eg: Colombo, Sri Lanka"
-                                required
-                                color={`${addressMessage ? 'failure' : ''}`}
-                                value={address}
-                                onChange={onChangeAddressValue}
-                                helperText={
-                                    <>
-                                        {addressMessage}
-                                    </>
-                                }
-                            />
+                        <TextInput
+                            id="email"
+                            placeholder="Eg: shehanrathnayake@email.com"
+                            required
+                            color={`${emailMessage ? 'failure' : ''}`}
+                            type="email"
+                            value={email}
+                            onChange={onChangeEmailValue}
+                            helperText={
+                                <>
+                                    {emailMessage}
+                                </>
+                            }
+                        />
+                    </div>
+                    <div>
+                        <div className="mb-2 block">
+                            <Label htmlFor="address" color={`${addressMessage ? 'failure' : ''}`} value="Your address"/>
                         </div>
-                        <div>
-                            <div className="mb-2 block">
-                                <Label htmlFor="contact" color={`${contactMessage ? 'failure' : ''}`} value="Your contact"/>
-                            </div>
-                            <TextInput
-                                id="contact"
-                                placeholder="Eg: +94771313951"
-                                required
-                                color={`${contactMessage ? 'failure' : ''}`}
-                                value={contact}
-                                onChange={onChangeContactValue}
-                                helperText={
-                                    <>
-                                        {contactMessage}
-                                    </>
-                                }
-                            />
+                        <TextInput
+                            id="address"
+                            placeholder="Eg: Colombo, Sri Lanka"
+                            required
+                            color={`${addressMessage ? 'failure' : ''}`}
+                            value={address}
+                            onChange={onChangeAddressValue}
+                            helperText={
+                                <>
+                                    {addressMessage}
+                                </>
+                            }
+                        />
+                    </div>
+                    <div>
+                        <div className="mb-2 block">
+                            <Label htmlFor="contact" color={`${contactMessage ? 'failure' : ''}`} value="Your contact"/>
                         </div>
-                        <div>
-                            <div className="mb-2 block">
-                                <Label htmlFor="password" color={`${passwordMessage ? 'failure' : ''}`} value="Enter Password"/>
-                            </div>
-                            <TextInput
-                                id="password"
-                                placeholder="Eg: **********"
-                                required
-                                color={`${passwordMessage ? 'failure' : ''}`}
-                                type="password"
-                                value={password}
-                                onChange={onChangePasswordValue}
-                                helperText={
-                                    <>
-                                        {passwordMessage}
-                                    </>
-                                }
-                            />
+                        <TextInput
+                            id="contact"
+                            placeholder="Eg: +94771313951"
+                            required
+                            color={`${contactMessage ? 'failure' : ''}`}
+                            value={contact}
+                            onChange={onChangeContactValue}
+                            helperText={
+                                <>
+                                    {contactMessage}
+                                </>
+                            }
+                        />
+                    </div>
+                    <div>
+                        <div className="mb-2 block">
+                            <Label htmlFor="password" color={`${passwordMessage ? 'failure' : ''}`} value="Enter Password"/>
                         </div>
-                        <div>
-                            <div className="mb-2 block">
-                                <Label htmlFor="confirm-password" color={`${confirmPasswordMessage ? 'failure' : ''}`} value="Confirm Password"/>
-                            </div>
-                            <TextInput
-                                id="confirm-password"
-                                placeholder="Eg: **********"
-                                required
-                                color={`${confirmPasswordMessage ? 'failure' : ''}`}
-                                type="password"
-                                value={confirmPassword}
-                                onChange={onChangeConfirmPasswordValue}
-                                helperText={
-                                    <>
-                                        {confirmPasswordMessage}
-                                    </>
-                                }
-                            />
+                        <TextInput
+                            id="password"
+                            placeholder="Eg: **********"
+                            required
+                            color={`${passwordMessage ? 'failure' : ''}`}
+                            type="password"
+                            value={password}
+                            onChange={onChangePasswordValue}
+                            helperText={
+                                <>
+                                    {passwordMessage}
+                                </>
+                            }
+                        />
+                    </div>
+                    <div>
+                        <div className="mb-2 block">
+                            <Label htmlFor="confirm-password" color={`${confirmPasswordMessage ? 'failure' : ''}`} value="Confirm Password"/>
                         </div>
-                        <Button onClick={onClickBtnRegister} type="button">Register</Button>
-                    </form>
-                </Card>
-            </div>
-
-            <div className="registration-step2">
-
-            </div>
-
+                        <TextInput
+                            id="confirm-password"
+                            placeholder="Eg: **********"
+                            required
+                            color={`${confirmPasswordMessage ? 'failure' : ''}`}
+                            type="password"
+                            value={confirmPassword}
+                            onChange={onChangeConfirmPasswordValue}
+                            helperText={
+                                <>
+                                    {confirmPasswordMessage}
+                                </>
+                            }
+                        />
+                    </div>
+                    <Button onClick={onClickBtnRegister} type="button">Register</Button>
+                </form>
+            </Card>
         </div>
     );
 };
