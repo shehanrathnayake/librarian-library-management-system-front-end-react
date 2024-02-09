@@ -1,7 +1,6 @@
 import {createBrowserRouter, Navigate, RouteObject} from "react-router-dom";
 import React from "react";
 import {Register} from "./component/register/Register.tsx";
-import {Payment} from "./component/payment/Payment.tsx";
 import {BookDetails} from "./component/bookdetails/BookDetails.tsx";
 import App from "./App.tsx";
 import {Home} from "./component/home/Home.tsx";
@@ -27,10 +26,6 @@ const appRoutes: RouteObject[] = [
     {
         path: 'login',
         element: <Login />
-    },
-    {
-        path: 'payments',
-        element: <Payment />
     }
 ];
 

@@ -1,5 +1,5 @@
 import {UserDto} from "../dto/UserDto.ts";
-import {setAuthorizationHeader} from "./auth-service.ts";
+import {setAuthHeader} from "./auth-service.ts";
 
 const API_URL = 'http://localhost:8080/api/v1/users';
 
@@ -23,6 +23,6 @@ export async function createNewUser(newUser: UserDto) {
 
 export async function getUserDetails(userId: string){
     return await (await fetch(`${API_URL}/${userId}`, {
-        headers: {'Authorization' : setAuthorizationHeader()},
+        headers: {'Authorization' : setAuthHeader()},
     })).json() as UserDto;
 }

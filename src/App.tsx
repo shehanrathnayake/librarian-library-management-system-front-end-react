@@ -1,9 +1,22 @@
 import './App.css'
 import {Header} from "./component/header/Header.tsx";
-import {Outlet} from "react-router-dom";
+import {Outlet, useNavigate} from "react-router-dom";
 import {BookProvider} from "./context/BookContext.tsx";
+import {useEffect} from "react";
+import {useUser, useUserDispatcher} from "./context/UserContext.tsx";
+import {getLoggedUser} from "./service/auth-service.ts";
 
 function App() {
+
+    const user = useUser();
+    const userDispatcher = useUserDispatcher();
+    const navigate = useNavigate();
+    useEffect(() => {
+        if(!user) {
+            getLoggedUser().then(user => {userDispatcher({type:'sign-in', user})})
+                .catch(() => navigate('/app/login'))
+        }
+    }, []);
 
   return (
     <>
